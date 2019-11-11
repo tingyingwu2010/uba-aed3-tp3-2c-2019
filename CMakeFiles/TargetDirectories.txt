@@ -1,0 +1,4 @@
+/home/fquispe/Escritorio/uba-aed3-tp3-2c-2019/CMakeFiles/rebuild_cache.dir
+/home/fquispe/Escritorio/uba-aed3-tp3-2c-2019/CMakeFiles/edit_cache.dir
+/home/fquispe/Escritorio/uba-aed3-tp3-2c-2019/CMakeFiles/test-32.dir
+/home/fquispe/Escritorio/uba-aed3-tp3-2c-2019/CMakeFiles/savings-main.dir

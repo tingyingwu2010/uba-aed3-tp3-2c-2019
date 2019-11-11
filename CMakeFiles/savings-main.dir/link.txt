@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/savings-main.dir/src/executables/savings-main.cpp.o CMakeFiles/savings-main.dir/src/entities/entrypoint/InputCVRP.cpp.o CMakeFiles/savings-main.dir/src/algorithms/SavingsEuristic.cpp.o CMakeFiles/savings-main.dir/src/entities/entrypoint/OutputCVRP.cpp.o CMakeFiles/savings-main.dir/src/entities/core/Dot.cpp.o  -o savings-main 
