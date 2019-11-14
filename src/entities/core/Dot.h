@@ -1,19 +1,20 @@
-//
-// Created by Christian nahuel Rivera on 9/11/19.
-//
+#pragma once
 
-#ifndef TP3_HEURISTICAS_CVRP_DOT_H
-#define TP3_HEURISTICAS_CVRP_DOT_H
+#include <iostream>
 
-class Dot{
-public:
-    int x;
-    int y;
-    int expectedCapacity;
+class Dot {
+ public:
+  int x;
+  int y;
+  int expectedCapacity;
 
-    Dot(int x, int y, int capacity);
+  Dot(int x, int y, int capacity = 0);
+  bool operator==(const Dot &rhs) const {
+    return (x == rhs.x) && (y == rhs.y) && (expectedCapacity == rhs.expectedCapacity);
+  }
+  friend std::ostream &operator<<(std::ostream &os, const Dot &dot);
+
+  friend class Route;
+  friend class CVRP;
+  friend class SavingsEuristic;
 };
-
-
-
-#endif //TP3_HEURISTICAS_CVRP_DOT_H
