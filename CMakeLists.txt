@@ -1,15 +1,15 @@
 cmake_minimum_required(VERSION 3.5.2)
 project(tp3_heuristicas_cvrp)
 
-# ==== Platform dependent options ====
-if(APPLE)
-    # Support for APPLE
-    set(EXTERNAL_LIB_DIR ${CMAKE_SOURCE_DIR}/lib/platform/darwin)
-else()
-    # Support 64 bit linux
-    set(EXTERNAL_LIB_DIR ${CMAKE_SOURCE_DIR}/lib/platform/linux64)
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
-endif()
+## ==== Platform dependent options ====
+#if(APPLE)
+#    # Support for APPLE
+#    set(EXTERNAL_LIB_DIR ${CMAKE_SOURCE_DIR}/lib/platform/darwin)
+#else()
+#    # Support 64 bit linux
+#    set(EXTERNAL_LIB_DIR ${CMAKE_SOURCE_DIR}/lib/platform/linux64)
+#    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
+#endif()
 
 # ======= Compilation options ========
 set(CMAKE_CXX_STANDARD 14)
@@ -31,8 +31,8 @@ set(EXTERNAL_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 include_directories(${SRC_DIR})
 include_directories(${EXTERNAL_INCLUDE_DIR})
 
-# ========= Link directories =========
-link_directories(${EXTERNAL_LIB_DIR})
+## ========= Link directories =========
+#link_directories(${EXTERNAL_LIB_DIR})
 
 # =========== Executables ============
 # ===== SOURCES =====
