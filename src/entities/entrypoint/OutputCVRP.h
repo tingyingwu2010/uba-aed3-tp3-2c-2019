@@ -5,7 +5,7 @@
 #ifndef TP3_HEURISTICAS_CVRP_OUTPUTCVRP_H
 #define TP3_HEURISTICAS_CVRP_OUTPUTCVRP_H
 
-
+#include <iostream>
 #include <vector>
 
 class OutputCVRP {
@@ -18,14 +18,16 @@ public:
 
     void setCantidadDeCamiones(int cantidadDeCamiones);
 
-    int getCostoSolución() const;
+    int getCostoSolucion() const;
 
-    void setCostoSolución(int costoSolución);
+    void setCostoSolucion(int costoSolucion);
+
+    friend std::ostream& operator<<(std::ostream& os, const OutputCVRP& o);
 
 private:
     std::vector<std::vector<int>> caminos;
     int cantidadDeCamiones;
-    int costoSolución;
+    int costoSolucion;
 
 };
 

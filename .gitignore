@@ -3,3 +3,5 @@ cmake-build-debug/
 *.DS_Store
 experimentacion/instancias/corridas
 experimentacion/.ipynb_checkpoints
+build/
+CMakeFiles

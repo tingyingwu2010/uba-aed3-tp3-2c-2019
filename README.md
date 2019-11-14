@@ -1,5 +1,22 @@
 # TP3 Herísticas para CVRP
 
+## Install
+1) Install `cmake`, `make`, `g++` and `gtest` 
+2) Clone project: `git clone git@github.com:lilmonk3y/uba-aed3-tp2-3c-2019.git` 
+_(or no ssh: `git clone https://github.com/lilmonk3y/uba-aed3-tp2-3c-2019.git`)_ 
+3) Run `cmake -S . -B build`
+
+## Build
+- Compile: `make -C build`
+- Test: `make -C build test`
+- Clean: `make -C build clean`
+_(se puede evitar `-C build` estar dentro de `build/`)_
+
+## Run & Usage
+### Arbitraje
+`./bin/cvrp_cws`
+
+
 ## Resolución del problema
 Se resuelve en c++ y se proveen ejecutables que toman la entrada traducida desde python.
 
