@@ -42,7 +42,7 @@ void print(OutputCVRP output) {
 
         std::cout << camino_str << std::endl;
     }
-    std::cout << output.getCostoSolución() << std::endl;
+    std::cout << output.getCostoSolucion() << std::endl;
 }
 
 #endif

@@ -5,7 +5,7 @@
 #ifndef TP3_HEURISTICAS_CVRP_INPUTCVRP_H
 #define TP3_HEURISTICAS_CVRP_INPUTCVRP_H
 
-
+#include <iostream>
 #include <vector>
 #include "../core/Dot.h"
 
@@ -22,6 +22,8 @@ public:
     const std::vector<Dot> &getVertexCordenates() const;
 
     void setVertexCordenates(const std::vector<Dot> &vertexCordenates);
+
+    friend std::ostream& operator<<(std::ostream& os, const InputCVRP& dt);
 
 private:
     int vertex;
