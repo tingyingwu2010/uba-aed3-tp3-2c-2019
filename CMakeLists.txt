@@ -27,6 +27,10 @@ set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
 set(DATA_DIR ${CMAKE_SOURCE_DIR}/test/data/input)
 set(EXTERNAL_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
 
+add_subdirectory(lib/googletest)
+include_directories(lib/googletest/googletest/include)
+include_directories(lib/googletest/googlemock/include)
+
 # ======= Include directories ========
 include_directories(${SRC_DIR})
 include_directories(${EXTERNAL_INCLUDE_DIR})

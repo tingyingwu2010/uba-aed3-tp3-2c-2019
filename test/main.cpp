@@ -1,9 +1,4 @@
 #include <gmock/gmock.h>
-/*
-#include <boost/log/core.hpp>
-#include <boost/log/trivial.hpp>
-#include <boost/log/expressions.hpp>
-*/
 
 int main(int argc, char** argv) {
 
