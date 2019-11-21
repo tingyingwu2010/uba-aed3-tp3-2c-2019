@@ -52,12 +52,28 @@ CVRP::~CVRP() {
     }
 }
 
+/**
+ * Calcular distancia entre 2 Dots
+ * Complexity: O(1)
+ *
+ * @param i
+ * @param j
+ * @return
+ */
 long CVRP::CalculateDistance(Dot i, Dot j) {
     long x_distance = i.x - j.x;
     long y_distance = i.y - j.y;
     return (long) ceil(sqrt((x_distance * x_distance) + (y_distance * y_distance)));
 }
 
+/**
+ * Calcular distnacia entre 2 Stations
+ * Complexity: O(1)
+ *
+ * @param i
+ * @param j
+ * @return
+ */
 long CVRP::CalculateDistance(Station *i, Station *j) {
     return CalculateDistance(i->dot, j->dot);
 }
@@ -93,6 +109,13 @@ Station *CVRP::GetPrevStation(Station *station) {
     return station->prev;
 }
 
+/**
+ * Linkear Stations
+ * Complexity: O(1)
+ *
+ * @param start
+ * @param end
+ */
 void CVRP::LinkStations(Station *start, Station *end) {
     if (!start->is_depot && !end->is_depot) {
         Station *next_station = start->next;
@@ -108,6 +131,16 @@ Station *CVRP::GetDepot() {
     return this->depot;
 }
 
+/**
+ * Agregar Route
+ * Complexity: O(#[start_station, ...end_station])
+ *
+ * @param qty_supplied
+ * @param distance
+ * @param start_station
+ * @param end_station
+ * @return
+ */
 Route *CVRP::AddRoute(
         int qty_supplied,
         long distance,
@@ -138,6 +171,14 @@ void CVRP::DeleteRoute(Route *route) {
     delete route;
 }
 
+/**
+ * Relacion Station con Route
+ * Complexity: O(1)
+ *
+ * @param station
+ * @param route
+ * @return
+ */
 Route *CVRP::AddToRoute(Station *station, Route *route) {
     station->route = route;
     return station->route;
@@ -215,6 +256,13 @@ long CVRP::SwapStations(Station *i, Station *j, int stations_qty) {
     return i->route->distance;
 }
 
+/**
+ * Intercambiar estaciones de lugar dentro de la Route en caso de mejorar la distancia
+ * Complexity: O(V^3)
+ *
+ * @param route
+ * @return
+ */
 long CVRP::TwoOptExchange(Route *route) {
     long best_distance = route->distance;
     long new_distance;
@@ -241,21 +289,21 @@ long CVRP::TwoOptExchange(Route *route) {
             new_distance = +route->distance + CVRP::CalculateDistance(route_stations[i - 1], route_stations[j]) +
                            CVRP::CalculateDistance(route_stations[i], route_stations[j + 1]) -
                            CVRP::CalculateDistance(route_stations[i - 1], route_stations[i]) -
-                           CVRP::CalculateDistance(route_stations[j], route_stations[j + 1]);
+                           CVRP::CalculateDistance(route_stations[j], route_stations[j + 1]); // O(1)
 
             if (new_distance < best_distance) {
                 // Actualizamos grafo y ruta
-                this->SwapStations(route_stations[i], route_stations[j], j - i);
+                this->SwapStations(route_stations[i], route_stations[j], j - i); // O(V / 2)
                 int m = i;
                 for (int k = j; k > m; k--) {
                     aux = route_stations[k];
                     route_stations[k] = route_stations[m];
                     route_stations[m++] = aux;
-                }
+                } // O(V) --> i y j pueden llegar a ser 1 y la cantidad de vertices, en caso de que haya una unica ruta
                 best_distance = new_distance;
             }
-        }
-    }
+        } // O(V^2)
+    } // O(V^3)
     free(route_stations);
     return best_distance;
 }

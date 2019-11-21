@@ -27,9 +27,7 @@ int Partition(SavingsHeuristic::Saving *input, long p, long r) {
 }
 
 void QuickSort::Sort(SavingsHeuristic::Saving *input, long p, long r) {
-
   if (p < r) {
-
     long j = Partition(input, p, r);
     Sort(input, p, j - 1);
     Sort(input, j + 1, r);
