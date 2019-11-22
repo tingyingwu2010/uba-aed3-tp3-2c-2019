@@ -1,12 +1,13 @@
-#include "algorithms/SavingsHeuristic.h"
+#include "algorithms/GreedyHeuristic.h"
 #include "utils/AlgorithmMain.h"
 
-int main(){
+
+int main() {
     InputCVRP *inputCVRP = AlgorithmMain::input_from_python();
 
-    SavingsHeuristic csw;
+    GreedyHeuristic greedy;
 
-    OutputCVRP *outputCVRP = csw.execute(inputCVRP);
+    OutputCVRP *outputCVRP = greedy.execute(inputCVRP);
     AlgorithmMain::print(*outputCVRP);
 
     return 0;

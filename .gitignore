@@ -5,3 +5,4 @@ experimentacion/instancias/corridas
 experimentacion/.ipynb_checkpoints
 build/
 CMakeFiles
+bin
