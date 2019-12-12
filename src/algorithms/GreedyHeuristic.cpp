@@ -7,28 +7,35 @@ OutputCVRP *GreedyHeuristic::greedySolution(std::vector<int> capacities, Graph *
     int next_c = 1;
 
     while (next_c < size - 1) {
-        std::vector<int> new_route;
-        new_route.push_back(1);
+    	if (capacities[cycle_route[next_c]] > capacity)
+    	{
+    		next_c++;
+    	}
+    	else
+    	{
+        	std::vector<int> new_route;
+        	new_route.push_back(1);
 
-        bool is_route = true;
+        	bool is_route = true;
 
-        int suma_demanda = 0;
+        	int suma_demanda = 0;
 
-        while (is_route) {
-            suma_demanda += capacities[cycle_route[next_c]];
+        	while (is_route) {
+            	suma_demanda += capacities[cycle_route[next_c]];
 
-            if (suma_demanda <= capacity) {
-                new_route.push_back(cycle_route[next_c] + 1);
-                next_c++;
+            	if (suma_demanda <= capacity) {
+                	new_route.push_back(cycle_route[next_c] + 1);
+                	next_c++;
 
-            }
+            	}
 
-            is_route = (suma_demanda <= capacity && next_c < size);
-        }
-        new_route.push_back(1);
+            	is_route = (suma_demanda <= capacity && next_c < size);
+        	}
+        	new_route.push_back(1);
 
-        routes.push_back(new_route);
-    }
+        	routes.push_back(new_route);
+    	}
+    }   
 
     int suma_costo = 0;
     for (int i = 0; i < routes.size(); i++) {
