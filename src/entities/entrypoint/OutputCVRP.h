@@ -1,15 +1,14 @@
-//
-// Created by Christian nahuel Rivera on 7/11/19.
-//
-
-#ifndef TP3_HEURISTICAS_CVRP_OUTPUTCVRP_H
-#define TP3_HEURISTICAS_CVRP_OUTPUTCVRP_H
+#pragma once
 
 #include <iostream>
 #include <vector>
 
 class OutputCVRP {
 public:
+    OutputCVRP() {};
+
+    OutputCVRP(std::vector<std::vector<int>> rutas, std::vector<int> capacidades);
+
     const std::vector<std::vector<int>> &getCaminos() const;
 
     void setCaminos(const std::vector<std::vector<int>> &caminos);
@@ -22,7 +21,7 @@ public:
 
     void setCostoSolucion(int costoSolucion);
 
-    friend std::ostream& operator<<(std::ostream& os, const OutputCVRP& o);
+    friend std::ostream &operator<<(std::ostream &os, const OutputCVRP &o);
 
 private:
     std::vector<std::vector<int>> caminos;
@@ -30,6 +29,3 @@ private:
     int costoSolucion;
 
 };
-
-
-#endif //TP3_HEURISTICAS_CVRP_OUTPUTCVRP_H
