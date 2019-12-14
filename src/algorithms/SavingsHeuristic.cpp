@@ -1,5 +1,8 @@
 #include "SavingsHeuristic.h"
 #include "utils/QuickSort.h"
+#include "../entities/core/Station.h"
+#include "../utils/CVRP.h"
+#include "../entities/entrypoint/OutputCVRP.h"
 
 int UpdateRoute(
         CVRP *graph,
