@@ -2,8 +2,8 @@
 
 ## Install
 1) Install `cmake`, `make`, `g++` and `gtest` 
-2) Clone project: `git clone git@github.com:lilmonk3y/uba-aed3-tp2-3c-2019.git` 
-_(or no ssh: `git clone https://github.com/lilmonk3y/uba-aed3-tp2-3c-2019.git`)_ 
+2) Clone project: `git clone git@github.com:ngoldenberg/uba-aed3-tp3-2c-2019.git` 
+_(or no ssh: `git clone https://github.com/ngoldenberg/uba-aed3-tp3-2c-2019`)_ 
 3) Run `cmake -S . -B build`
 
 ## Build
@@ -29,7 +29,7 @@ Para procesar archivos raw de casos de CVRP, puede utilizarse un script de pytho
 - `jupyter notebook`
 - Correr el archivo `template_experimentación.ipynb`
 
-## Resolución del problema
+## Resolucion del problema
 Se resuelve en c++ y se proveen ejecutables que toman la entrada traducida desde python.
 
 Se implementan las Heurísticas: 
@@ -37,9 +37,9 @@ Se implementan las Heurísticas:
 - [x] greedy-v2: heuŕıstica constructiva golosa adicional.
 - clustering-sweep: Heuŕıstica constructiva de cluster-first, route-second. Clusterizando mediante sweep algorithm y luego resolviendo los TSPs restantes de manera heuŕıstica.
 - clustering-v2: Heuŕıstica constructiva de cluster-first, route-second con otra alternativa de clus- terizacíon y resolucíon de TSPs posteriores.
-- simulated-annealing: Metaheuŕıstica de Simulated Annealing.
+- [x] simulated-annealing: Metaheuŕıstica de Simulated Annealing.
 
-## Experimentación
+## Experimentacion
 Se grafica y eligen los ejecutables desde python. Lo manejamos con jupyter notebook y pasamos la entrada a c++.
 
 Usamos instancias de la página http://vrp.atd-lab.inf.puc-rio.br/index.php/en/
@@ -52,6 +52,10 @@ jupyter notebook
 ## Informe
 El mismo se encuenta en overleaf y su link es: https://www.overleaf.com/read/hnsmmtdhgxyg
 
+## Developer notes
 
+### Agilizar Simulated Annealing
+Para correr los tests mas rapidamente, es posible incrementar el valor de `SA_COOLING`. 
+Chequear [esta linea](https://github.com/ngoldenberg/uba-aed3-tp3-2c-2019/blob/alg/sa/src/config/defaults.h#L6).
 
 
