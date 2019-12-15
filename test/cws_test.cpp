@@ -23,7 +23,7 @@ TEST(CWSTest, a_n32_k5) {
 
     ASSERT_TRUE(outputCVRP.getCostoSolucion() <
                 a_n32_k5_result[a_n32_k5_result.size() - 1][0] *
-                ((double) CVRP_OPTIMIZATION_TRESHOLD_PERCENTAGE / (double) 100 + 1));
+                ((double) CVRP_OPTIMIZATION_THRESHOLD_PERCENTAGE / (double) 100 + 1));
 
     for (int i = 1; i <= outputCVRP.getCantidadDeCamiones(); i++) {
         for (int j = 0; j < a_n32_k5_result[i].size(); j++) {
@@ -48,7 +48,7 @@ TEST(CWSTest, set_a_32) {
 
     ASSERT_TRUE(outputCVRP.getCostoSolucion() <
                 784 *
-                ((double) CVRP_OPTIMIZATION_TRESHOLD_PERCENTAGE / (double) 100 + 1));
+                ((double) CVRP_OPTIMIZATION_THRESHOLD_PERCENTAGE / (double) 100 + 1));
 }
 
 TEST(CWSTest, X_n502_k39) {
@@ -63,5 +63,5 @@ TEST(CWSTest, X_n502_k39) {
     ASSERT_EQ(outputCVRP.getCantidadDeCamiones(), 39);
 
     ASSERT_TRUE(outputCVRP.getCostoSolucion() <
-                69230 * ((double) CVRP_OPTIMIZATION_TRESHOLD_PERCENTAGE / (double) 100 + 1));
+                69230 * ((double) CVRP_OPTIMIZATION_THRESHOLD_PERCENTAGE / (double) 100 + 1));
 }
