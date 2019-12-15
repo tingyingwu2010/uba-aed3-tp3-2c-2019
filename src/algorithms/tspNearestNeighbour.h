@@ -1,14 +1,4 @@
 //
 // Created by andisici on 18/11/19.
 //
-
-#ifndef TP3_HEURISTICAS_CVRP_TSPNEARESTNEIGHBOUR_H
-#define TP3_HEURISTICAS_CVRP_TSPNEARESTNEIGHBOUR_H
-
-
-class tspNearestNeighbour {
-
-};
-
-
-#endif //TP3_HEURISTICAS_CVRP_TSPNEARESTNEIGHBOUR_H
+#pragma once
