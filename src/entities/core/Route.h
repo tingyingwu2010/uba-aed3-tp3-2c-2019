@@ -7,17 +7,18 @@
 
 class Route {
 public:
-    Route()= default;
-    ~Route()= default;
+    Route() = default;
 
-    int index;
-    int qty_supplied;
-    int num_stations;
+    ~Route() = default;
 
-    long distance;
+    int index{};
+    int qty_supplied{};
+    int num_stations{};
 
-    Station *start_station;
-    Station *end_station;
+    long distance{};
+
+    Station *start_station = nullptr;
+    Station *end_station = nullptr;
 
     friend std::ostream &operator<<(std::ostream &os, const Route &r) {
         Station *current_station = r.start_station;

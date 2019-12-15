@@ -1,4 +1,6 @@
-cmake_minimum_required(VERSION 3.5.2)
+
+cmake_minimum_required(VERSION 3.10)
+
 project(tp3_heuristicas_cvrp)
 
 # ==== Platform dependent options ====
@@ -19,10 +21,14 @@ set(CMAKE_CXX_VISIBILITY_PRESET hidden)
 # ========== Main variables ==========
 set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
 set(MAIN_CWS ${SRC_DIR}/executables/savings_main.cpp)
-set(MAIN_GREEDY ${SRC_DIR}/executables/greedy_main.cpp)
+set(MAIN_GREEDY ${SRC_DIR}/executables/goloso_main.cpp)
 set(MAIN_CLUSTER ${SRC_DIR}/executables/cluster_main.cpp)
 set(MAIN_CLUSTER_ALTERNATIVE ${SRC_DIR}/executables/cluster_alternative_main.cpp)
 set(MAIN_SA ${SRC_DIR}/executables/sa_main.cpp)
+
+add_subdirectory(lib/googletest)
+include_directories(lib/googletest/googletest/include)
+include_directories(lib/googletest/googlemock/include)
 set(TEST_DIR ${CMAKE_SOURCE_DIR}/test)
 set(DATA_DIR ${CMAKE_SOURCE_DIR}/test/data/input)
 set(EXTERNAL_INCLUDE_DIR ${CMAKE_SOURCE_DIR}/include)
@@ -70,4 +76,6 @@ add_executable(cvrp_test ${TEST_FILES})
 target_include_directories(cvrp_test PUBLIC ${TEST_DIR})
 target_link_libraries(cvrp_test LINK_PUBLIC cvrp_src gtest gmock)
 
+
 gtest_discover_tests(cvrp_test)
+

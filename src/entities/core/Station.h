@@ -17,18 +17,18 @@ public:
 
     Dot dot;
 
-    bool is_depot{};
+    bool is_depot = false;
 
     // Pointers to next and previous (adjacent) stations.
-    Station *next{};
-    Station *prev{};
+    Station *next = nullptr;
+    Station *prev = nullptr;
 
     // Pointer to the route this station belongs to.
-    Route *route{};
+    Route *route = nullptr;
 
     friend std::ostream &operator<<(std::ostream &os, const Station &s) {
         os << "{i: " << s.index << ", x: " << s.dot.x << ", y: " << s.dot.y << ", d: " << s.dot.expectedCapacity
-           << "}";
+           << ", D: " << s.is_depot << "}";
         return os;
     };
 

@@ -6,4 +6,4 @@ experimentacion/.ipynb_checkpoints
 build/
 CMakeFiles
 venv/
-bin/*
+bin/

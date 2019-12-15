@@ -42,3 +42,16 @@ std::ostream &operator<<(std::ostream &os, const OutputCVRP &o) {
     os << o.getCostoSolucion() << std::endl;
     return os;
 }
+
+OutputCVRP::OutputCVRP(std::vector<std::vector<int>> rutas, std::vector<int> capacidades) {
+    this->caminos = rutas;
+    this->cantidadDeCamiones = rutas.size();
+
+    long peso = 0;
+    for(auto ruta : rutas){
+        for(auto vertice : ruta){
+            peso += capacidades.at(vertice);
+        }
+    }
+    this->costoSolucion = peso;
+}
