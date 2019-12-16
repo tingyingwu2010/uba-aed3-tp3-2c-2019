@@ -716,7 +716,6 @@ CVRP::IChange CVRP::RandomOneInterchange() {
     bool ichange_accepted = false;
 
     do {
-
         do {
 
             // Never choose the depot, at stations[0].
@@ -724,11 +723,8 @@ CVRP::IChange CVRP::RandomOneInterchange() {
             j = rand() % (stations_size - 1) + 1;
 
         } while (stations[i]->route->index == stations[j]->route->index);
-
-        // Choose between i-change operators (0) (0,1); (1) (1,0) or (2)
-        // (1,1).
+        // Choose between i-change operators
         int opt = rand() % 3;
-        //int opt = ICHANGE_OP11;
 
         int qty_supplied_i = stations[i]->route->qty_supplied;
         int qty_supplied_j = stations[j]->route->qty_supplied;
@@ -738,57 +734,35 @@ CVRP::IChange CVRP::RandomOneInterchange() {
 
         // Pre-calculate the euclidean distances used for the
         // route cost (distance) calculations of new solutions.
-        int dist_i_j =
-                CalculateDistance(stations[i], stations[j]);
-        int dist_pj_j =
-                CalculateDistance(stations[j]->prev, stations[j]);
-        int dist_pi_i =
-                CalculateDistance(stations[i]->prev, stations[i]);
-        int dist_pi_j =
-                CalculateDistance(stations[i]->prev, stations[j]);
-        int dist_pj_nj =
-                CalculateDistance(stations[j]->prev, stations[j]->next);
-        int dist_j_ni =
-                CalculateDistance(stations[j], stations[i]->next);
-        int dist_j_nj =
-                CalculateDistance(stations[j], stations[j]->next);
-        int dist_pj_i =
-                CalculateDistance(stations[j]->prev, stations[i]);
-        int dist_pi_ni =
-                CalculateDistance(stations[i]->prev, stations[i]->next);
-        int dist_i_ni =
-                CalculateDistance(stations[i], stations[i]->next);
-        int dist_i_nj =
-                CalculateDistance(stations[i], stations[j]->next);
+        int dist_i_j = CalculateDistance(stations[i], stations[j]);
+        int dist_pj_j = CalculateDistance(stations[j]->prev, stations[j]);
+        int dist_pi_i = CalculateDistance(stations[i]->prev, stations[i]);
+        int dist_pi_j = CalculateDistance(stations[i]->prev, stations[j]);
+        int dist_pj_nj = CalculateDistance(stations[j]->prev, stations[j]->next);
+        int dist_j_ni = CalculateDistance(stations[j], stations[i]->next);
+        int dist_j_nj = CalculateDistance(stations[j], stations[j]->next);
+        int dist_pj_i = CalculateDistance(stations[j]->prev, stations[i]);
+        int dist_pi_ni = CalculateDistance(stations[i]->prev, stations[i]->next);
+        int dist_i_ni = CalculateDistance(stations[i], stations[i]->next);
+        int dist_i_nj = CalculateDistance(stations[i], stations[j]->next);
 
-        // Operator (0,1), i.e. element j goes into route of element i.
+        // Operation 0: element j goes into route of element i
         if (opt == 0) {
             // First verify if the change is feasible.
-            if ((qty_supplied_i + demand_j) <= this->capacity) {
+            if (qty_supplied_i + demand_j <= this->capacity) {
                 ichange_accepted = true;
-                ichange.distance =
-                        // Insert stations[j] after [i].
-                        +dist_i_j + dist_j_ni - dist_i_ni
-
-                        // New distance between stations[j] and [j + 1],
-                        // in route j.
-                        + dist_pj_nj - dist_pj_j - dist_j_nj;
-
+                ichange.distance = +dist_i_j + dist_j_ni - dist_i_ni // Insert stations[j] after [i]
+                                   // New distance between stations[j] and [j + 1], in route j
+                                   + dist_pj_nj - dist_pj_j - dist_j_nj;
                 ichange.operation = 0;
             }
-
         } else if (opt == 1) {
             // First verify if the change is feasible.
             if (qty_supplied_j + demand_i <= this->capacity) {
                 ichange_accepted = true;
-                ichange.distance =
-                        // Insert stations[i] after [j].
-                        +dist_i_j + dist_i_nj - dist_j_nj
-
-                        // New distance between stations[i] and [i + 1],
-                        // in route i.
-                        + dist_pi_ni - dist_pi_i - dist_i_ni;
-
+                ichange.distance = +dist_i_j + dist_i_nj - dist_j_nj // Insert stations[i] after [j]
+                                   // New distance between stations[i] and [i + 1], in route i
+                                   + dist_pi_ni - dist_pi_i - dist_i_ni;
                 ichange.operation = 1;
             }
         } else {
@@ -799,7 +773,6 @@ CVRP::IChange CVRP::RandomOneInterchange() {
                         // Change in distance caused by including stations[i] in
                         // route j, between stations [j - 1] and [j + 1].
                         dist_pj_i + dist_i_nj - dist_pi_i - dist_i_ni
-
                         // Change in distance caused by including stations[j] in
                         // route i, between stations [i - 1] and [i + 1].
                         + dist_pi_j + dist_j_ni - dist_pj_j - dist_j_nj;

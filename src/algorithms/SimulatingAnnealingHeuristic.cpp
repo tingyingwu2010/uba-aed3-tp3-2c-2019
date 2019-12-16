@@ -6,25 +6,17 @@ SimulatingAnnealingHeuristic::SimulatingAnnealingHeuristic() = default;
 
 SimulatingAnnealingHeuristic::~SimulatingAnnealingHeuristic() = default;
 
-// Generates a random number (double floating point precision) in the interval [0.00, 1.00[.
 double Rand() {
     double r = (double) rand() / (double) (RAND_MAX + 1.0);
     return r;
 }
 
-double CalcAcceptanceProb(
-        long delta,
-        double temp) {
-
-    // If the route distance from the candidate solution is better, return 
-    // a probability of 1.0, i.e. force the SA algorithm to accept this new 
-    // solution.
+double CalcAcceptanceProb(long delta, double temp) {
+    // If the route distance from the candidate solution is better, return a probability of 1.0
     if (delta >= 0) {
         return 1.0;
     }
-
-    // Calculate the probability of acceptance, using formula (6.1) on 
-    // page 130 of Toth2002.
+    // Calculate the probability of acceptance
     double p = exp(((double) (delta)) / temp);
     return p;
 }
@@ -67,17 +59,13 @@ SimulatingAnnealingHeuristic::CoolingScheduleParams CalcCoolingSchedule(CVRP *gr
 
     // Go through all route combinations.
     for (it = graph->routes.begin(); it != graph->routes.end(); it++) {
-
-        // For clearer code and readability, let's operate over an array, in 
-        // which we could work with indexes.
-        Station **stations_i = graph->CreateRouteRep(*it);
+        Station **stations_i = graph->CreateRouteRep(*it); // O(route->stations)
 
         jt = it;
         jt++;
 
         for (; jt != graph->routes.end(); jt++) {
-
-            Station **stations_j = graph->CreateRouteRep(*jt);
+            Station **stations_j = graph->CreateRouteRep(*jt); // O(route->stations)
 
             // Evaluate the gains from swapping 1 stations between 
             // routes route_i and route_j. Fortunately, this is never larger 
@@ -94,131 +82,60 @@ SimulatingAnnealingHeuristic::CoolingScheduleParams CalcCoolingSchedule(CVRP *gr
                     dist_i_ni = CVRP::CalculateDistance(stations_i[i], stations_i[i + 1]);
 
                     dist_pi_j = CVRP::CalculateDistance(stations_i[i - 1], stations_j[j]);
-                    //dist_j_i   = dist_i_j;
 
                     dist_pj_nj = CVRP::CalculateDistance(stations_j[j - 1], stations_j[j + 1]);
                     dist_j_nj = CVRP::CalculateDistance(stations_j[j], stations_j[j + 1]);
 
-                    // Check if the exchange is feasible, i.e. if the 
-                    // route's qty_supplied value does not exceed the 
-                    // capacity of the vehicles.
-                    qty_supplied_j =
-                            (*jt)->qty_supplied
-                            + (stations_i[i]->dot.expectedCapacity);
+                    // Check exchange
+                    qty_supplied_j = (*jt)->qty_supplied + (stations_i[i]->dot.expectedCapacity);
 
-                    // Change in distance caused by including point i in 
-                    // route_j, i.e. testing operator (1,0)
-                    if ((qty_supplied_j > graph->capacity)) {
-
-                        op_ij = 0;
-
-                    } else {
-
-                        // A feasible (potential) change.
+                    // Change in distance caused by including point i in route_j
+                    if (qty_supplied_j <= graph->capacity) {
+                        // Potential change.
                         nfeas++;
-
-                        op_ij =
-                                // Insert station i in between j - 1 and j.
-                                +dist_pj_i
-                                + dist_i_j
-                                - dist_pj_j
-
+                        op_ij = +dist_pj_i + dist_i_j - dist_pj_j // Insert station i in between j - 1 and j.
                                 // New distance between stations (i - 1) and (i + 1).
-                                + dist_pi_ni
-                                - dist_pi_i
-                                - dist_i_ni;
-
+                                + dist_pi_ni - dist_pi_i - dist_i_ni;
                         abs_change = abs(op_ij);
-
-                        if (abs_change > T_s)
-                            T_s = abs_change;
-
-                        if (abs_change < T_f)
+                        if (abs_change > T_s || abs_change < T_f)
                             T_s = abs_change;
                     }
 
-                    qty_supplied_i =
-                            (*it)->qty_supplied
-                            + (stations_j[j]->dot.expectedCapacity);
-
-                    if (qty_supplied_i > graph->capacity) {
-
-                        op_ji = 0;
-
-                    } else {
-
+                    qty_supplied_i = (*it)->qty_supplied + (stations_j[j]->dot.expectedCapacity);
+                    if (qty_supplied_i <= graph->capacity) {
                         nfeas++;
-
-                        // Change in distance caused by including point j in 
-                        // route_i, i.e. testing operator (0,1).
-                        op_ji =
-                                // Insert station j in between i - 1 and i.
-                                +dist_pi_j
-                                + dist_i_j
-                                - dist_pi_i
-
-                                // New distance between stations (j - 1) and (j + 1).
-                                + dist_pj_nj
-                                - dist_pj_j
-                                - dist_j_nj;
-
+                        // Change in distance caused by including point j in route_i
+                        op_ji = +dist_pi_j + dist_i_j - dist_pi_i // Insert station j in between i - 1 and i
+                                // New distance between stations (j - 1) and (j + 1)
+                                + dist_pj_nj - dist_pj_j - dist_j_nj;
                         abs_change = abs(op_ji);
-
-                        if (abs_change > T_s)
-                            T_s = abs_change;
-
-                        if (abs_change < T_f)
+                        if (abs_change > T_s || abs_change < T_f)
                             T_s = abs_change;
                     }
-
-                    if ((qty_supplied_i - stations_i[i]->dot.expectedCapacity) > graph->capacity
-                        || (qty_supplied_j - stations_j[j]->dot.expectedCapacity) > graph->capacity) {
-
-                        op_swap = 0;
-
-                    } else {
-
-                        // Update the number of feasible exchanges by 2 (i.e. 
-                        // exchanging points i and j between routes i and j).
+                    if (qty_supplied_i - stations_i[i]->dot.expectedCapacity <= graph->capacity &&
+                        qty_supplied_j - stations_j[j]->dot.expectedCapacity <= graph->capacity) {
+                        // Update the number of feasible exchanges by 2
                         nfeas = nfeas + 2;
-
-                        // Change in distance by exchanging points i and j between 
-                        // route_i and route_j, i.e. testing operator (1,1).
+                        // Change in distance by exchanging points i and j between route_i and route_j
                         op_swap =
-                                // Change in distance caused by including point i in
-                                // route_j, between stations j - 1 and j.
-                                +dist_pj_i
-                                + CVRP::CalculateDistance(stations_i[i], stations_j[j + 1])
-                                - dist_pi_i
-                                - dist_i_ni
-
-                                // Change in distance caused by including point j in
-                                // route_i, between stations i - 1 and i.
-                                + dist_pi_j
-                                + CVRP::CalculateDistance(stations_j[j], stations_i[i + 1])
-                                - dist_pj_j
-                                - dist_j_nj;
-
+                                // Change distance caused by including point i in route_j, between stations j - 1 and j
+                                +dist_pj_i + CVRP::CalculateDistance(stations_i[i], stations_j[j + 1]) - dist_pi_i -
+                                dist_i_ni
+                                // Change distance caused by including point j in route_i, between stations i - 1 and i
+                                + dist_pi_j + CVRP::CalculateDistance(stations_j[j], stations_i[i + 1]) - dist_pj_j -
+                                dist_j_nj;
                         abs_change = abs(op_swap);
-
-                        if (abs_change > T_s)
+                        if (abs_change > T_s || abs_change < T_f)
                             T_s = abs_change;
-
-                        if (abs_change < T_f)
-                            T_f = abs_change;
                     }
                 }
             }
-
             free(stations_j);
         }
-
         free(stations_i);
     }
 
-    // Fill the cooling schedule parameters structure.
     SimulatingAnnealingHeuristic::CoolingScheduleParams params;
-
     params.T_s = (double) T_s;
     params.T_f = (double) T_f;
     params.alpha = (graph->num_stations * nfeas);
@@ -227,57 +144,34 @@ SimulatingAnnealingHeuristic::CoolingScheduleParams CalcCoolingSchedule(CVRP *gr
     return params;
 }
 
-void SimulatingAnnealingHeuristic::Run(CVRP *graph, double cooling_rate, double T_i, uint32_t L, uint16_t stop_n,
-                                       bool debug) {
+void SimulatingAnnealingHeuristic::Run(CVRP *graph, double cooling_rate, uint32_t L, uint16_t stop_n, bool debug) {
+    CVRP *S_c = new CVRP(); // Current solution S_c.
+    CVRP *S_n = new CVRP(); // Current solution S_c.
+    CVRP *S_b = new CVRP(); // Best solution S_b.
 
-    // Current solution S_c.
-    CVRP *S_c = new CVRP();
-
-    // Current solution S_c.
-    CVRP *S_n = new CVRP();
-
-    // Best solution S_b.
-    CVRP *S_b = new CVRP();
-
-    // Set the initial solution S from the graph given as argument.
+    // Set the initial solution S from the graph
     S_c->CopyFrom(graph);
-
-
-    // Set S_b <- S_c (from the current solution S_c).
     S_b->CopyFrom(graph);
     S_n->CopyFrom(graph);
 
-
-    // Save the number of iterations for which S_c remains unchanged, i.e. it 
-    // is accepted after the 3 step.
+    // Save the number of iterations for which S_c remains unchanged, i.e. it is accepted after the 3 step.
     int S_c_unchanged = 0;
 
-    // Although the Osman1993 method is not implemented here, its method for
-    // calculation of initial temperature was maintained.
-    CoolingScheduleParams params = CalcCoolingSchedule(graph);
+    // Calculate initial temp
+    CoolingScheduleParams params = CalcCoolingSchedule(graph); // O(stations^2)
 
-    // Variables for Cooling Schedule. FIXME: We're using the initial 
-    // temperature calculation method from Osman1993.
-    // Use the formula set in our paper for determining the initial 
-    // temperature 
+    // Cooling schedule formula
     double T_k = (params.T_s / abs(log(0.5))) * 10.0;
 
-    double randomness = 0.0;
-    double prob = 0.0;
-
-    uint32_t k = 0;
-    uint32_t i = 0;
-
+    double randomness, prob;
+    uint32_t k, i = 0;
     long best_distance = INT_MAX;
 
-    // Keep 1-Interchange information, without performing changes. 
-    // Notice that changes are always evaluated and performed over S_c.
+    // Keep interchange information --> changes are always over S_c.
     CVRP::IChange ichange;
 
     do {
-
         for (i = 0; i < L; i++) {
-
             // Reset ichange
             ichange.i = 0;
             ichange.j = 0;
@@ -311,20 +205,14 @@ void SimulatingAnnealingHeuristic::Run(CVRP *graph, double cooling_rate, double 
                     S_c_unchanged = 0;
                 } else {
                     // Do not accept S_n and keep S_c.
-
                     // TODO: This is expensive and should be avoided.
                     S_n->CopyFrom(S_c);
-
-                    // TODO: In addition to the copy made above, I figured I have to do this, just because the order of
-                    //  the Station vector is different in S_n and S_c after the previous instruction.
-                    S_c->CopyFrom(S_n);
-
+                    S_c->CopyFrom(S_n); // Vector order
                     if (debug)
                         printf("SA: Keeping S_c at iteration i = %d: \n\t[T_k] = %0.4f\n\t[S_i] = %ld\n\t[S_c]"
                                " = %ld\n\t[S_n] = %ld\n\t[ichange.distance] = %ld\n\t[S_b] = %ld\n\t[S_c UNCHANGED FOR]"
                                " = %d\n\n", i, T_k, graph->total_distance, S_c->total_distance, S_n->total_distance,
                                ichange.distance, S_b->total_distance, S_c_unchanged);
-
                     S_c_unchanged++;
                 }
             }
@@ -338,10 +226,6 @@ void SimulatingAnnealingHeuristic::Run(CVRP *graph, double cooling_rate, double 
 
         // Cool it down...
         T_k = T_k * (1 - cooling_rate);
-
-        // Increment L_k
-        k++;
-
     } while (S_c_unchanged < stop_n);
 
     S_b->Validate();
@@ -353,7 +237,7 @@ OutputCVRP *SimulatingAnnealingHeuristic::execute(InputCVRP *input) {
 
     // Pointers to different method's solutions.
     SavingsHeuristic::Run(&cws_cvrp);
-    this->Run(&cws_cvrp, SA_COOLING, SA_INIT_TEMP, SA_TERMINATION, SA_HALTING);
+    this->Run(&cws_cvrp, SA_COOLING, SA_TERMINATION, SA_HALTING);
 
     auto *output = new OutputCVRP();
     output->setCantidadDeCamiones(cws_cvrp.routes.size());
