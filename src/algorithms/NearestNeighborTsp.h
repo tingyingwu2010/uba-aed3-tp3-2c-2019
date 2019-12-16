@@ -17,5 +17,5 @@ private:
 
     static void setAsVisited(std::vector<bool> visitados, std::vector<bool> analizar);
 
-    static bool anyToVisit(std::vector<bool> vector);
+    static bool anyToVisit(std::vector<bool> vector, std::vector<bool> aAnalizar);
 };

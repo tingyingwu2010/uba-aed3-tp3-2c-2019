@@ -14,7 +14,7 @@ std::vector<int> NearestNeighborTsp::execute(std::vector<bool> verticesAAnalizar
     visited[0] = true;
 
     int node = DEPOSITO;
-    while( anyToVisit(visited) ) {
+    while(anyToVisit(visited, verticesAAnalizar)) {
         int min_vecino = nearestNeigthbour(node, visited, graph, graph->getVertex(), verticesAAnalizar);
         cycle.push_back(min_vecino);
         node = min_vecino;
@@ -49,9 +49,9 @@ void NearestNeighborTsp::setAsVisited(std::vector<bool> visitados, std::vector<b
     }
 }
 
-bool NearestNeighborTsp::anyToVisit(std::vector<bool> vector) {
-    for(auto vertex : vector){
-        if(! vertex){
+bool NearestNeighborTsp::anyToVisit(std::vector<bool> vector, std::vector<bool> aAnalizar) {
+    for(int vectorIndex = 0; vectorIndex < vector.size(); vectorIndex++){
+        if(aAnalizar.at(vectorIndex) and ! vector.at(vectorIndex)){
             return true;
         }
     }

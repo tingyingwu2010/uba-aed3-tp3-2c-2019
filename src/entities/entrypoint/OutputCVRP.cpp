@@ -50,7 +50,7 @@ OutputCVRP::OutputCVRP(std::vector<std::vector<int>> rutas, std::vector<int> cap
     long peso = 0;
     for(auto ruta : rutas){
         for(auto vertice : ruta){
-            peso += capacidades.at(vertice);
+            peso += capacidades.at(vertice-1);
         }
     }
     this->costoSolucion = peso;

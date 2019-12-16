@@ -21,7 +21,7 @@ OutputCVRP *GreedyHeuristic::greedySolution(std::vector<int> capacities, Graph *
             suma_demanda += capacities[cycle_route[next_c]];
 
             if (suma_demanda <= capacity) {
-                new_route.push_back(cycle_route[next_c]);
+                new_route.push_back(cycle_route[next_c] + 1);
                 next_c++;
             }
 

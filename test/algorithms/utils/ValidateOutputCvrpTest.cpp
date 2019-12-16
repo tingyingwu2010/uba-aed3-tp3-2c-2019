@@ -13,16 +13,16 @@ TEST(ValidateOutputCvrpTest, allDotsInOnlyOnePath_test1){
     ValidateOutputCvrp validate = ValidateOutputCvrp();
 
     auto path1 = std::vector<int>();
-    path1.push_back(0);
     path1.push_back(1);
     path1.push_back(2);
-    path1.push_back(0);
+    path1.push_back(3);
+    path1.push_back(1);
 
     auto path2 = std::vector<int>();
-    path2.push_back(0);
-    path2.push_back(3);
+    path2.push_back(1);
     path2.push_back(4);
-    path2.push_back(0);
+    path2.push_back(5);
+    path2.push_back(1);
 
     auto paths = new std::vector<std::vector<int>>();
     paths->push_back(path1);
@@ -102,16 +102,16 @@ TEST(ValidateOutputCvrpTest, allPathsBeginAndEndInDepot_test3){
     ValidateOutputCvrp validate = ValidateOutputCvrp();
 
     auto path1 = std::vector<int>();
-    path1.push_back(0);
     path1.push_back(1);
     path1.push_back(2);
-    path1.push_back(0);
+    path1.push_back(3);
+    path1.push_back(1);
 
     auto path2 = std::vector<int>();
-    path2.push_back(0);
-    path2.push_back(3);
+    path2.push_back(1);
     path2.push_back(4);
-    path2.push_back(0);
+    path2.push_back(5);
+    path2.push_back(1);
 
     auto paths = new std::vector<std::vector<int>>();
     paths->push_back(path1);
@@ -132,16 +132,16 @@ TEST(ValidateOutputCvrpTest, anyPathWeightIsBiggerThanCapacity_test1){
     dots.push_back(Dot(1,1,8));
 
     auto path1 = std::vector<int>();
-    path1.push_back(0);
     path1.push_back(1);
     path1.push_back(2);
-    path1.push_back(0);
+    path1.push_back(3);
+    path1.push_back(1);
 
     auto path2 = std::vector<int>();
-    path2.push_back(0);
-    path2.push_back(3);
+    path2.push_back(1);
     path2.push_back(4);
-    path2.push_back(0);
+    path2.push_back(5);
+    path2.push_back(1);
 
     auto paths = new std::vector<std::vector<int>>();
     paths->push_back(path1);
@@ -162,16 +162,16 @@ TEST(ValidateOutputCvrpTest, anyPathWeightIsBiggerThanCapacity_test2){
     dots.push_back(Dot(1,1,2));
 
     auto path1 = std::vector<int>();
-    path1.push_back(0);
     path1.push_back(1);
     path1.push_back(2);
-    path1.push_back(0);
+    path1.push_back(3);
+    path1.push_back(1);
 
     auto path2 = std::vector<int>();
-    path2.push_back(0);
-    path2.push_back(3);
+    path2.push_back(1);
     path2.push_back(4);
-    path2.push_back(0);
+    path2.push_back(5);
+    path2.push_back(1);
 
     auto paths = new std::vector<std::vector<int>>();
     paths->push_back(path1);
@@ -192,16 +192,16 @@ TEST(ValidateOutputCvrpTest, validate_test1){
     dots.push_back(Dot(1,1,2));
 
     auto path1 = std::vector<int>();
-    path1.push_back(0);
     path1.push_back(1);
     path1.push_back(2);
-    path1.push_back(0);
+    path1.push_back(3);
+    path1.push_back(1);
 
     auto path2 = std::vector<int>();
-    path2.push_back(0);
-    path2.push_back(3);
+    path2.push_back(1);
     path2.push_back(4);
-    path2.push_back(0);
+    path2.push_back(5);
+    path2.push_back(1);
 
     auto paths = new std::vector<std::vector<int>>();
     paths->push_back(path1);

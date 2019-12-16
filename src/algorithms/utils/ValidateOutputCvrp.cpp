@@ -6,7 +6,8 @@
 #include "ValidateOutputCvrp.h"
 
 bool ValidateOutputCvrp::allDotsInOnlyOnePath(std::vector<std::vector<int>> caminos, int dotsSize){
-    auto visited = std::vector<bool>(dotsSize, false);
+    auto visited = std::vector<bool>(dotsSize+1, false);
+    visited.at(0) = true;
     visited.at(DEPOSITO) = true;
 
     for(auto camino : caminos){
@@ -56,7 +57,7 @@ bool ValidateOutputCvrp::anyPathWeightIsBiggerThanCapacity(std::vector<std::vect
 long ValidateOutputCvrp::weightOfPath(std::vector<int> camino, std::vector<Dot> cordenates) {
     long peso = 0;
     for(auto vertice : camino){
-        peso += cordenates.at(vertice).expectedCapacity;
+        peso += cordenates.at(vertice-1).expectedCapacity;
     }
     return peso;
 }

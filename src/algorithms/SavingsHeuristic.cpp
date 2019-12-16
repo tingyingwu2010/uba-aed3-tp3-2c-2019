@@ -213,7 +213,7 @@ OutputCVRP *SavingsHeuristic::execute(InputCVRP *input) {
 
     this->Run(&cvrp);
 
-    auto *output = new OutputCVRP();
+    auto *output = new OutputCVRP(vector < vector < int >> (), vector<int>());
 
     output->setCantidadDeCamiones(cvrp.routes.size());
     output->setCostoSolucion(cvrp.total_distance);
