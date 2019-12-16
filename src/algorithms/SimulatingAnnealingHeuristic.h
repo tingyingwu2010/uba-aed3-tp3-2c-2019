@@ -36,7 +36,7 @@ public:
         int R;
     } CoolingScheduleParams;
 
-    static void Run(CVRP *graph, double cooling_rate, double T_i, uint32_t L, uint16_t stop_n, bool debug=false);
+    static void Run(CVRP *graph, double cooling_rate, uint32_t L, uint16_t stop_n, bool debug=false);
 
     OutputCVRP *execute(InputCVRP *input) override;
 };
