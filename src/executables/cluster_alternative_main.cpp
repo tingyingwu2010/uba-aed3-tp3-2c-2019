@@ -1,15 +1,13 @@
-#include <algorithms/SavingsHeuristic.h>
+#include <algorithms/NearestNeighborAGM.h>
 #include "utils/AlgorithmMain.h"
 
-int main(){
+int main() {
     InputCVRP *inputCVRP = AlgorithmMain::input_from_python();
 
-    // TODO: Declarar clase y correr execute
-//    SavingsHeuristic csw;
-//    OutputCVRP *outputCVRP = csw.execute(inputCVRP);
+    NearestNeighborAGM nn_agm;
+    OutputCVRP *outputCVRP = nn_agm.execute(inputCVRP);
 
-    // TODO: Print outputCVRP
-//    AlgorithmMain::print(*outputCVRP);
+    AlgorithmMain::print(*outputCVRP);
 
     return 0;
 }

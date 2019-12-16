@@ -1,9 +1,4 @@
-//
-// Created by Christian nahuel Rivera on 7/11/19.
-//
-
-#ifndef TP3_HEURISTICAS_CVRP_INPUTCVRP_H
-#define TP3_HEURISTICAS_CVRP_INPUTCVRP_H
+#pragma once
 
 #include <iostream>
 #include <vector>
@@ -23,13 +18,17 @@ public:
 
     void setVertexCordenates(const std::vector<Dot> &vertexCordenates);
 
-    friend std::ostream& operator<<(std::ostream& os, const InputCVRP& dt);
+    int getTotalCapacity();
+
+    std::vector<int> getTotalCapacityVector();
+
+    std::vector<std::pair<int, int>> GetOnlyPoints();
+
+    friend std::ostream &operator<<(std::ostream &os, const InputCVRP &dt);
 
 private:
     int vertex;
     int capacity;
     std::vector<Dot> vertexCordenates;
+
 };
-
-
-#endif //TP3_HEURISTICAS_CVRP_INPUTCVRP_H
