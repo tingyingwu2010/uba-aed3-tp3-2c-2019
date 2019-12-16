@@ -3,6 +3,7 @@
 #include "CVRPHeuristic.h"
 #include "entities/entrypoint/OutputCVRP.h"
 #include "entities/entrypoint/InputCVRP.h"
+#include "entities/core/Graph.h"
 #include "entities/core/AdjacencyMatrixGraph.h"
 
 class GreedyHeuristic : public CVRPHeuristic {

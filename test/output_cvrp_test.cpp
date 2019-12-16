@@ -8,7 +8,7 @@ using ::testing::AllOf;
 using ::testing::Property;
 
 TEST(OutputCVRPTest, SetBasicProperties) {
-    auto *output = new OutputCVRP();
+    auto *output = new OutputCVRP(std::vector<std::vector<int>>(), std::vector<int>());
 
     output->setCostoSolucion(123);
     output->setCantidadDeCamiones(3);

@@ -12,20 +12,18 @@
 
 class AdjacencyMatrixGraph : public Graph {
 public:
-    AdjacencyMatrixGraph();
-
     explicit AdjacencyMatrixGraph(std::vector<Dot> pVector);
 
-    bool adyacent(int v1, int v2);
+    bool adyacent(int v1, int v2) override;
 
-    int getVertex();
+    int getVertex() override;
 
     long distance(int v1, int v2) override;
 
     std::vector<Edge> getEdges() override;
 
     //Tests:
-    AdjacencyMatrixGraph(int size);
+    explicit AdjacencyMatrixGraph(int size);
     void addEdge(int from, int to, Distancia weigth) override;
 
 private:

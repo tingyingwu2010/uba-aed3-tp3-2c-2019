@@ -19,6 +19,8 @@ public:
 
     CVRP();
 
+    void CopyFrom(CVRP * graph);
+
     explicit CVRP(InputCVRP *dataset);
 
     ~CVRP();
@@ -53,7 +55,6 @@ public:
 
     long SwapStations(Station *i, Station *j, int num_stations);
 
-
     vector<vector<int>> GetRoutesVector(bool include_depot = true);
 
     Route *AddRoute(
@@ -68,6 +69,21 @@ public:
 
     void DeleteRoute(Route *route);
 
+    typedef struct IChange {
+
+        int i;
+        int j;
+
+        long distance;
+
+        int operation;
+
+    } IChange;
+
+    long OneInterchange(CVRP::IChange & ichange);
+    CVRP::IChange RandomOneInterchange();
+
+    long TwoOptExchange(Route * route, bool is_hard);
 
     friend std::ostream &operator<<(std::ostream &os, const CVRP &cvrp) {
         os << "num_stations: " << cvrp.num_stations << " | num_routes: " << cvrp.num_routes << " | capacity: "
@@ -82,4 +98,16 @@ public:
         }
         return os;
     };
+
+    Station **CreateRouteRep(Route *route);
+
+    static long CalcRouteDist(Route *rt);
+
+    long InsertIntoRoute(Station *i, Route *route_j, Station *j);
+
+    long SwapStations(Station *i, Route *route_i, Station *j, Route *route_j);
+
+    void PrintRoutes();
+
+    bool Validate();
 };

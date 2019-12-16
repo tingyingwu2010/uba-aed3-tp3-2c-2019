@@ -4,6 +4,7 @@
 
 #include "AdjacencyMatrixGraph.h"
 #include <cmath>
+#include "assert.h"
 
 AdjacencyMatrixGraph::AdjacencyMatrixGraph(std::vector<Dot> dots) {
     for(int iter = 0; iter < dots.size(); iter ++){
@@ -16,10 +17,8 @@ AdjacencyMatrixGraph::AdjacencyMatrixGraph(std::vector<Dot> dots) {
             int xj = dots.at(j).y;
             int yi = dots.at(i).x;
             int yj = dots.at(j).y;
-            if(!( areEquivalent(xi, xj, yi, yj))){
-                matrix[i][j] = getDistanceBetweenPoints(xi, xj, yi, yj);
-                matrix[j][i] = getDistanceBetweenPoints(xi, xj, yi, yj);
-            }
+            matrix[i][j] = getDistanceBetweenPoints(xi, xj, yi, yj);
+            matrix[j][i] = getDistanceBetweenPoints(xi, xj, yi, yj);
         }
     }
 }
@@ -53,8 +52,6 @@ AdjacencyMatrixGraph::AdjacencyMatrixGraph(int size) {
 }
 
 long AdjacencyMatrixGraph::distance(int v1, int v2) {
+    assert(adyacent(v1,v2));
     return matrix.at(v1).at(v2);
-}
-
-AdjacencyMatrixGraph::AdjacencyMatrixGraph() {
 }

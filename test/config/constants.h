@@ -1,3 +1,6 @@
-int CVRP_OPTIMIZATION_TRESHOLD_PERCENTAGE = 30;
+#pragma once
 
-string DATA_DIR = "../test/data/input/";
+#include <string>
+
+inline int CVRP_OPTIMIZATION_THRESHOLD_PERCENTAGE = 30;
+inline std::string DATA_DIR = "../test/data/input/";
